@@ -5,7 +5,8 @@ const jwt = require( 'jsonwebtoken' );
 const knex = require( '../knex' );
 const router = express.Router();
 const authorize = function( req, res, next ) {
-  const token = req.cookies.token;
+const token = req.cookies.token;
+
   jwt.verify( token, process.env.JWT_SECRET, ( err, decoded ) => {
     if ( err ) {
       return next( boom.create( 401, 'Unauthorized' ) );
@@ -16,104 +17,107 @@ const authorize = function( req, res, next ) {
 };
 
 //populate cards
-router.get('/user_town_lists/true', function (req, res, next) {
+router.get( '/user_town_lists/true', function( req, res, next ) {
   const token = req.cookies.token;
-  if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-          if (err) {
-              res.redirect('../map.html');
-          }
-          req.user = decoded;
-      });
-  } else {
-      next();
-  }
-  knex( 'user_town_lists' )
-    .innerJoin( 'towns', 'towns.id', 'user_town_lists.towns_id' )
-    .where( {
-      'user_town_lists.users_id': req.user.id,
-      'user_town_lists.visited': true
-    })
-    .orderBy('towns.name', 'ASC')
-    .then((data) => {
-      const list = data;
-      res.send( list );
-    } )
-    .catch( ( err ) => {
-      next( err );
+  if ( token ) {
+    jwt.verify( token, process.env.JWT_SECRET, ( err, decoded ) => {
+      if ( err ) {
+        res.redirect( '../map.html' );
+      }
+      req.user = decoded;
+
+      knex( 'user_town_lists' )
+        .innerJoin( 'towns', 'towns.id', 'user_town_lists.towns_id' )
+        .where( {
+          'user_town_lists.users_id': req.user.userId,
+          'user_town_lists.visited': true
+        } )
+        .orderBy( 'towns.name', 'ASC' )
+        .then( ( data ) => {
+          const list = data;
+          res.send( list );
+        } )
+        .catch( ( err ) => {
+          next( err );
+        } );
+
     } );
+  } else {
+    next();
+  }
 } );
 
 
 
-router.get('/user_town_lists/false', function (req, res, next) {
+router.get( '/user_town_lists/false', function( req, res, next ) {
   const token = req.cookies.token;
-  if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-          if (err) {
-              res.redirect('../map.html');
-          }
-          req.user = decoded;
-      });
+  if ( token ) {
+    jwt.verify( token, process.env.JWT_SECRET, ( err, decoded ) => {
+      if ( err ) {
+        res.redirect( '../map.html' );
+      }
+      req.user = decoded;
+
+      knex( 'user_town_lists' )
+        .innerJoin( 'towns', 'towns.id', 'user_town_lists.towns_id' )
+        .where( {
+          'user_town_lists.users_id': req.user.userId,
+          'user_town_lists.visited': false
+        } )
+        .orderBy( 'towns.name', 'ASC' )
+        .then( ( data ) => {
+
+          const list = data;
+          res.send( list );
+        } )
+        .catch( ( err ) => {
+          next( err );
+        } );
+
+    });
   } else {
-      next();
+    next();
   }
-  knex( 'user_town_lists' )
-    .innerJoin( 'towns', 'towns.id', 'user_town_lists.towns_id' )
-    .where( {
+});
 
-      'user_town_lists.users_id': req.body.users_id,
-      'user_town_lists.visited': false
-    })
-    .orderBy('towns.name', 'ASC')
-    .then( ( data ) => {
-
-      const list = data;
-      res.send( list );
-    } )
-    .catch( ( err ) => {
-      next( err );
-    } );
-} );
 //check if entry for user+town already exists
 router.get( '/user_town_lists/validate/:id', function( req, res, next ) {
   const token = req.cookies.token;
-  if (token) {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-          if (err) {
-              res.redirect('../map.html');
-          }
-          req.user = decoded;
+  if ( token ) {
+    jwt.verify( token, process.env.JWT_SECRET, ( err, decoded ) => {
+      if ( err ) {
+        res.redirect( '../map.html' );
+      }
+      req.user = decoded;
 
-          const id = Number.parseInt(req.params.id);
+      const id = Number.parseInt( req.params.id );
 
-          if (Number.isNaN(id)) {
-              return next();
-          }
+      if ( Number.isNaN( id ) ) {
+        return next();
+      }
 
-          knex( 'user_town_lists' )
-          .where( {
-            'users_id': req.user.userId,
-            'towns_id': id
-          } )
-          .then( ( data ) => {
-            const entry = data;
-            const responseObject = {
-              data: entry,
-              userId: req.user.userId
-            }
-            res.send( responseObject );
-          } )
-          .catch( ( err ) => {
-            next( err );
-          } );
+      knex( 'user_town_lists' )
+        .where( {
+          'users_id': req.user.userId,
+          'towns_id': id
+        })
+        .then( ( data ) => {
+          const entry = data;
+          const responseObject = {
+            data: entry,
+            userId: req.user.userId
+          };
+          res.send( responseObject );
+        })
+        .catch( ( err ) => {
+          next( err );
+        });
 
-      });
+    });
   } else {
-      next();
+    next();
   }
-} );
-
+});
 
 
 //get user_town_lists
@@ -139,15 +143,16 @@ router.post( '/user_town_lists', ( req, res, next ) => {
       };
       return knex( 'user_town_lists' )
         .insert( insert_user_town_list, '*' );
-    } )
-  .then( ( data ) => {
+    })
+    .then( ( data ) => {
       const user_town_list = data[ 0 ];
       res.send( user_town_list );
-    } )
+    })
     .catch( ( err ) => {
       next( err );
-    } );
-} );
+    });
+});
+
 router.patch( '/user_town_lists/:id', ( req, res, next ) => {
   const id = Number.parseInt( req.params.id );
   if ( Number.isNaN( id ) ) {
@@ -159,7 +164,8 @@ router.patch( '/user_town_lists/:id', ( req, res, next ) => {
       if ( !user_town_list ) {
         throw boom.create( 404, 'Not Found' );
       }
-      const { id,
+      const {
+        id,
         visited,
         towns_id,
         users_id
@@ -179,7 +185,7 @@ router.patch( '/user_town_lists/:id', ( req, res, next ) => {
       }
       return knex( 'user_town_lists' )
         .where( 'id', id )
-        .update(update_user_town_list, '*');
+        .update( update_user_town_list, '*' );
     } )
     .then( ( data ) => {
       const user_town_list = ( data[ 0 ] );
@@ -189,6 +195,7 @@ router.patch( '/user_town_lists/:id', ( req, res, next ) => {
       next( err );
     } );
 } );
+
 router.delete( '/user_town_lists/:id', ( req, res, next ) => {
   const id = Number.parseInt( req.param.id );
   if ( Number.isNaN( id ) ) {
