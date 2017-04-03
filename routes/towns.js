@@ -1,4 +1,3 @@
-//TODO://Post (photos/comments STRETCH)
 
 'use strict';
 
@@ -43,7 +42,7 @@ router.get('/towns/:id', (req, res, next) => {
         });
 });
 
-//this route deletes a town by id, TODO:need to add permissions for only an admin to have access to deleting a town.
+//this route deletes a town by id, 
 router.delete('/towns/:id', (req, res, next) => {
     const id = Number.parseInt(req.params.id);
 

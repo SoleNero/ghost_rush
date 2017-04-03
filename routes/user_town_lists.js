@@ -18,16 +18,12 @@ const authorize = function( req, res, next ) {
 //populate cards
 router.get('/user_town_lists/true', function (req, res, next) {
   const token = req.cookies.token;
-  console.log(token);
   if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
           if (err) {
               res.redirect('../map.html');
           }
           req.user = decoded;
-          console.log(req.user);
-
-
       });
   } else {
       next();
@@ -52,21 +48,16 @@ router.get('/user_town_lists/true', function (req, res, next) {
 
 router.get('/user_town_lists/false', function (req, res, next) {
   const token = req.cookies.token;
-  console.log(token);
   if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
           if (err) {
               res.redirect('../map.html');
           }
           req.user = decoded;
-          console.log(req.user);
-
-
       });
   } else {
       next();
   }
-  console.log("route accessed");
   knex( 'user_town_lists' )
     .innerJoin( 'towns', 'towns.id', 'user_town_lists.towns_id' )
     .where( {
@@ -86,17 +77,13 @@ router.get('/user_town_lists/false', function (req, res, next) {
 } );
 //check if entry for user+town already exists
 router.get( '/user_town_lists/validate/:id', function( req, res, next ) {
-  console.log("did something");
   const token = req.cookies.token;
-  console.log(token);
   if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
           if (err) {
               res.redirect('../map.html');
           }
           req.user = decoded;
-          console.log(req.user);
-          console.log(req.user.userId);
 
           const id = Number.parseInt(req.params.id);
 
@@ -115,7 +102,6 @@ router.get( '/user_town_lists/validate/:id', function( req, res, next ) {
               data: entry,
               userId: req.user.userId
             }
-            console.log("RESPONSE OBJECT: ", responseObject);
             res.send( responseObject );
           } )
           .catch( ( err ) => {
@@ -124,7 +110,6 @@ router.get( '/user_town_lists/validate/:id', function( req, res, next ) {
 
       });
   } else {
-    console.log("did something else");
       next();
   }
 } );
@@ -135,7 +120,6 @@ router.get( '/user_town_lists/validate/:id', function( req, res, next ) {
 //users_id and towns_id if there's the match we need to send back object if not
 
 router.post( '/user_town_lists', ( req, res, next ) => {
-  console.log(req.body);
   const towns_id = Number.parseInt( req.body.towns_id );
   const users_id = Number.parseInt( req.body.users_id );
   if ( !Number.isInteger( towns_id ) ) {
@@ -158,7 +142,6 @@ router.post( '/user_town_lists', ( req, res, next ) => {
     } )
   .then( ( data ) => {
       const user_town_list = data[ 0 ];
-      console.log( user_town_list );
       res.send( user_town_list );
     } )
     .catch( ( err ) => {
@@ -166,16 +149,13 @@ router.post( '/user_town_lists', ( req, res, next ) => {
     } );
 } );
 router.patch( '/user_town_lists/:id', ( req, res, next ) => {
-  console.log("req.param.id: ", req.params.id);
   const id = Number.parseInt( req.params.id );
   if ( Number.isNaN( id ) ) {
     return next();
   }
-  console.log("id: ", id);
   knex( 'user_town_lists' )
     .where( 'id', id )
     .then( ( user_town_list ) => {
-      console.log("user_town_list: ", user_town_list);
       if ( !user_town_list ) {
         throw boom.create( 404, 'Not Found' );
       }
@@ -197,7 +177,6 @@ router.patch( '/user_town_lists/:id', ( req, res, next ) => {
       if ( users_id ) {
         update_user_town_list.users_id = users_id;
       }
-      console.log("update_user_town_list: ", update_user_town_list);
       return knex( 'user_town_lists' )
         .where( 'id', id )
         .update(update_user_town_list, '*');

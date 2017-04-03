@@ -64,7 +64,6 @@ app.use((err, _req, res, _next) => {
             .send(err.message);
     }
 
-    console.error(err.stack);
     res.sendStatus(500);
 });
 

@@ -10,7 +10,6 @@ const router = express.Router();
 
 //sign up/registraion route
 router.post('/users', (req, res, next) => {
-  console.log("req.body: ", req.body);
     const {
         username,
         email,
@@ -31,15 +30,6 @@ router.post('/users', (req, res, next) => {
         return next(boom.create(400, 'Username must not be blank'));
     }
 
-//causing  problems on signup
-    // if (!location_city || !location_city.trim()) {
-    //     return next();
-    // }
-    //
-    // if (!location_state || !location_state.trim()) {
-    //     return next();
-    // }
-
     knex('users')
         .select(knex.raw('1=1'))
         .where('email', email)
@@ -53,14 +43,6 @@ router.post('/users', (req, res, next) => {
         })
 
     .then((hashed_password) => {
-
-            // const {
-            //     username,
-            //     email,
-            //     location_city,
-            //     location_state
-            //
-            // } = req.body;
             const insertUser = {
                 username,
                 email,
@@ -68,7 +50,6 @@ router.post('/users', (req, res, next) => {
                 location_state,
                 hashed_password
             };
-            console.log("insertUser: ", insertUser);
 
             return knex('users')
                 .insert((insertUser), '*');
@@ -123,15 +104,12 @@ router.get('/users', (req, res, next) => {
 //this route gets a single user by id (TODO:only user logged in can access their information)
 router.get('/users/getid', (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token);
   if (token) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
           if (err) {
               res.redirect('../map.html');
           }
           req.user = decoded;
-          console.log(req.user);
-          console.log(req.user.userId);
 
           const userID = req.user.userId;
           knex('users')
@@ -154,7 +132,6 @@ router.get('/users/getid', (req, res, next) => {
           });
         });
         }else {
-          console.log("did something else");
             next();
         }
 });

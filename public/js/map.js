@@ -13,7 +13,6 @@ function init() {
     });
     $(document).ready(
         function() {
-            console.log("I'm loaded");
 
             function TownLocation(townObj) {
                 const obj = townObj;

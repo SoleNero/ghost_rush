@@ -13,11 +13,9 @@ function init() {
     center: tarryall
   });
 
-  // console.log( 'loaded map init!');
 
   //map markers
   $(document).ready(function() {
-    // console.log("I'm ready!");
 
     //town constructor
     function Town(town) {
@@ -35,7 +33,6 @@ function init() {
       this.townTour = obj["tour_avail"];
       this.townDescThen = obj["description_then"];
       this.townDescNow = obj["description_now"];
-      // console.log(town);
     }
 
     //get town by id
@@ -46,19 +43,16 @@ function init() {
     const townID = urlParams.get('id');
 
     const townAPIroute = '/towns/' + townID;
-    // console.log("routes ready!");
+
 
     $.getJSON(townAPIroute)
       .done((town) => {
-
-        // console.log(town[0]);
 
         var currentTown = new Town(town[0]);
         currentTown.populateTown();
       })
 
     .fail(function(err) {
-      // console.log(err);
     });
 
     //populate town page with marker
@@ -80,7 +74,6 @@ function init() {
         position: { lat: this.lat, lng: this.lng },
         map: map
       });
-      //  console.log(marker);
 
     };
     //toasts for buttons

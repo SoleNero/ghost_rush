@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  console.log("I'm ready at admin_page.js!");
 
 
   function AdminList(users) {
@@ -14,12 +13,10 @@
   $.getJSON('/users')
       .done((users) => {
         var row = users.data;
-        console.log(users.data);
         row.map(createList);
 
       })
       .fail(function(err) {
-          console.log(err);
       });
 
 

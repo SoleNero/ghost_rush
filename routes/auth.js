@@ -15,7 +15,6 @@ router.post('/auth', (req, res, next) => {
         password
     } = req.body;
     if (!email || !email.trim()) {
-        console.log("I'm getting past evaluation");
         return next(boom.create(400, 'Email must not be blank'));
     }
     if (!password || password.length < 8) {
@@ -46,14 +45,13 @@ router.post('/auth', (req, res, next) => {
                     email: user.email
                 }, process.env.JWT_SECRET, {
                     expiresIn: '3h'
-                }); //Tested on postman, this works for now. May need to make test to make sure.
+                }); 
 
                 res.cookie('token', token, {
                     httpOnly: true,
                     expires: expiry,
                     secure: router.get('env') === 'production'
                 });
-                console.log(res.cookie);
                 res.send(user);
             } else {
                 next(boom.create(400, 'Bad email or password'));
@@ -68,7 +66,6 @@ router.post('/auth', (req, res, next) => {
 });
 
 router.delete('/auth/:id', (req, res) => {
-  console.log(res.cookie);
   res.clearCookie('token');
   res.send(true);
 });

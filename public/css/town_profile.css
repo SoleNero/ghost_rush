@@ -16,13 +16,6 @@ background-repeat: no-repeat;
 margin-left: 30px;
 }
 
-/*#image {
-  display: block;
-  margin-top: 30px;
-  width: 300px;
-  height: 200px;
-}*/
-
 #townDetails {
   height: 250px;
   width: 350px;
@@ -51,6 +44,3 @@ margin-left: 30px;
   height: 250px;
 }
 
-#townDetails{
-  /*border: .5px solid grey;*/
-}

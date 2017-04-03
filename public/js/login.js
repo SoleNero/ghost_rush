@@ -1,8 +1,4 @@
 'use strict';
-// id="signUpContainer"
-// id="loginEmailInput"
-// id="loginPassInput"
-// id="logInSubmitButton"
 
 (function() {
 

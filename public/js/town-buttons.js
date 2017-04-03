@@ -12,7 +12,7 @@ $( document ).ready(
 
   // listen for click on div #buttonsContainer
   $("#buttonsContainer").click(buttonsContainerClicked);
-  // console.log("routes ready!");
+
   function buttonsContainerClicked() {
     var target = $(event.target);
     console.log("TARGET: ", target);
@@ -50,9 +50,7 @@ $( document ).ready(
             body: updatedData,
             method: 'PATCH'
           } );
-          // .done( () => {
-            //TODO toast success message
-          // } )
+         
           return;
         } else {
           var userID = response.userId;
@@ -81,11 +79,7 @@ $( document ).ready(
               console.log("finished!")
             }
           })
-          // $.post( '/user_town_lists',
-          //   townEntryRequest );
-          // .done( () => {
-            //TODO toast success message
-          // } )
+       
         }
       } );
 
