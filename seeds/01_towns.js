@@ -155,21 +155,6 @@ exports.seed = function(knex, Promise) {
                     tour_avail: 'Unknown',
                     longitude: -105.512776,
                     latitude: 39.989987
-                }),
-                knex('towns').insert({
-                    id: 11,
-                    name: "MatVille",
-                    photo_url: 'http://i.imgur.com/M5kL71b.jpg',
-                    yr_est: 1843,
-                    yr_abnd: 'Still Alive',
-                    short_desc: 'MatVille, established in 1865, produced much gold before musical theatre became the primary source of revenue. It is still a thriving community today.',
-                    description_then: "Ancient as the gold the town was built.",
-                    description_now: "Aging gracefully",
-                    cemetery: 'No',
-                    mineral_found: 'Gold',
-                    tour_avail: 'Unknown',
-                    longitude: -105.270546,
-                    latitude: 40.014986
                 })
             ]);
         })

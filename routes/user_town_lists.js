@@ -51,6 +51,7 @@ router.get( '/user_town_lists/true', function( req, res, next ) {
 
 router.get( '/user_town_lists/false', function( req, res, next ) {
   const token = req.cookies.token;
+
   if ( token ) {
     jwt.verify( token, process.env.JWT_SECRET, ( err, decoded ) => {
       if ( err ) {
@@ -73,6 +74,7 @@ router.get( '/user_town_lists/false', function( req, res, next ) {
         .catch( ( err ) => {
           next( err );
         } );
+
 
     });
   } else {
@@ -101,6 +103,7 @@ router.get( '/user_town_lists/validate/:id', function( req, res, next ) {
           'users_id': req.user.userId,
           'towns_id': id
         })
+
         .then( ( data ) => {
           const entry = data;
           const responseObject = {
@@ -124,6 +127,7 @@ router.get( '/user_town_lists/validate/:id', function( req, res, next ) {
 //users_id and towns_id if there's the match we need to send back object if not
 
 router.post( '/user_town_lists', ( req, res, next ) => {
+
   const towns_id = Number.parseInt( req.body.towns_id );
   const users_id = Number.parseInt( req.body.users_id );
   if ( !Number.isInteger( towns_id ) ) {
@@ -144,6 +148,7 @@ router.post( '/user_town_lists', ( req, res, next ) => {
       return knex( 'user_town_lists' )
         .insert( insert_user_town_list, '*' );
     })
+
     .then( ( data ) => {
       const user_town_list = data[ 0 ];
       res.send( user_town_list );
@@ -154,6 +159,7 @@ router.post( '/user_town_lists', ( req, res, next ) => {
 });
 
 router.patch( '/user_town_lists/:id', ( req, res, next ) => {
+
   const id = Number.parseInt( req.params.id );
   if ( Number.isNaN( id ) ) {
     return next();
@@ -183,6 +189,7 @@ router.patch( '/user_town_lists/:id', ( req, res, next ) => {
       if ( users_id ) {
         update_user_town_list.users_id = users_id;
       }
+
       return knex( 'user_town_lists' )
         .where( 'id', id )
         .update( update_user_town_list, '*' );
