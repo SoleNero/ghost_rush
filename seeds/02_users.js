@@ -1,7 +1,7 @@
 'use strict';
 var bcrypt = require('bcrypt');
   exports.seed = function (knex, Promise){
-    var hash_pass = bcrypt.hashSync('thisispassword', 8);
+    var hash_pass = bcrypt.hashSync('test1234', 8);
 
     return knex('users')
     .insert(

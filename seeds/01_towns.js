@@ -170,21 +170,6 @@ exports.seed = function(knex, Promise) {
                     tour_avail: 'Unknown',
                     longitude: -105.270546,
                     latitude: 40.014986
-                }),
-                knex('towns').insert({
-                    id: 12,
-                    name: "Teddi Town",
-                    photo_url: 'https://secure.parksandresorts.wdpromedia.com/media/disneyparks/blog/wp-content/uploads/2011/09/day593242LARGE.jpg',
-                    yr_est: 1820,
-                    yr_abnd: 'Still Alive',
-                    short_desc: 'Teddi Town, established in 1883, was a silver mining town for several years. The town was destroyed by a 50-foot toddler in 1901, but a few buildings are still partially standing.',
-                    description_then: "Silver veins were plentiful for several years!",
-                    description_now: "The town was destroyed by a 50-foot toddler in 1901, but a few buildings are still partially standing.",
-                    cemetery: 'Yes',
-                    mineral_found: 'Silver',
-                    tour_avail: 'Yes',
-                    longitude: -104.971924,
-                    latitude: 39.868041
                 })
             ]);
         })
