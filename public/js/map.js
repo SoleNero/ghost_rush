@@ -48,12 +48,12 @@ function init() {
                     var locations = towns;
                     locations.map(renderMarkerWithWindow);
                 });
+                
             //render markers and info windows
             function renderMarkerWithWindow(obj) {
                 var newTown = new TownLocation(obj);
                 var content = newTown.contentString();
                 var position = newTown.position();
-                // var name = newTown.name;
                 var marker = new google.maps.Marker({
                     position: position,
                     map: map,

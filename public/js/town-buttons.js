@@ -8,14 +8,14 @@ $( document ).ready(
     const townID = urlParams.get('id');
 
     const validateRoute = '/user_town_lists/validate/' + townID;
-    console.log('validateRoute: ', validateRoute);
+
 
   // listen for click on div #buttonsContainer
   $("#buttonsContainer").click(buttonsContainerClicked);
 
   function buttonsContainerClicked() {
     var target = $(event.target);
-    console.log("TARGET: ", target);
+
       // if target is neither #wantToGo nor #beenThere then return
     if ( !target.is( '#wantToGo' ) && !target.is( '#beenThere ' ) ) {
       return;
@@ -24,17 +24,17 @@ $( document ).ready(
     $.getJSON( validateRoute )
       .done( ( data ) => {
         // if entry exists
-        console.log("data: ", data);
+
         const response = data;
         const responseData = response.data
-        console.log("HERE'S THE RESPONSE: ", response);
+
         if ( responseData.length > 0) {
           // townEntry.toggleVisited
           var townEntry = new UserTownEntry(responseData[0]);
           var patchRoute = '/user_town_lists/' + townEntry.id;
-          console.log("townEntry.id: ", townEntry.id);
+
           var updatedData = "";
-          console.log("target", target.id);
+
           if ( target.is( '#beenThere' ) ) {
             updatedData = townEntry.beenThere();
           }
@@ -44,7 +44,7 @@ $( document ).ready(
           }
           // patch to database
 
-          console.log("patch route: ", patchRoute);
+
 
           $.ajax( patchRoute, {
             body: updatedData,
@@ -54,8 +54,6 @@ $( document ).ready(
           return;
         } else {
           var userID = response.userId;
-          console.log("townID: ", townID);
-          console.log("userID: ", userID);
           var townEntryRequest = new NewUserTownEntry(townID,userID);
           // if event target = #beenThere
           var myData = "";
@@ -76,7 +74,6 @@ $( document ).ready(
             data: myData,
             context: townEntryRequest,
             complete: function(){
-              console.log("finished!")
             }
           })
        
@@ -86,26 +83,29 @@ $( document ).ready(
   }
 
   function NewUserTownEntry( townID, usersID ) {
-    console.log("CREATING newUserTownEntry");
     this.towns_id = townID;
     this.users_id = usersID;
     // this.visited = false;
     this.visited = true;
-    console.log("VISITED: ", this.visited);
   }
 
 
   NewUserTownEntry.prototype.beenThere = function() {
-    console.log("ABOUT TO SET VISITED");
     this.visited = true;
-        return { "towns_id":this.towns_id, "users_id":this.users_id, "visited":this.visited };
+        return { 
+          "towns_id":this.towns_id, 
+          "users_id":this.users_id, 
+          "visited":this.visited 
+        };
   };
   NewUserTownEntry.prototype.wantToGo = function() {
-    console.log("THIS in Want to Go: ", this);
-    console.log("this.visited: ", this.visited);
     this.visited = false;
 
-    return { "towns_id":this.towns_id, "users_id":this.users_id, "visited":this.visited };
+    return { 
+      "towns_id":this.towns_id, 
+      "users_id":this.users_id, 
+      "visited":this.visited 
+    };
   };
 
   function UserTownEntry( responseObject ) {
@@ -116,16 +116,23 @@ $( document ).ready(
     this.visited = obj[ "visited" ];
   }
   UserTownEntry.prototype.beenThere = function() {
-    console.log("ABOUT TO SET VISITED");
     this.visited = true;
-        return { "id":this.id, "towns_id":this.towns_id, "users_id":this.users_id, "visited":this.visited };
+        return { 
+          "id":this.id, 
+          "towns_id":this.towns_id, 
+          "users_id":this.users_id, 
+          "visited":this.visited 
+        };
   };
   UserTownEntry.prototype.wantToGo = function() {
-    console.log("THIS in Want to Go: ", this);
-    console.log("this.visited: ", this.visited);
     this.visited = false;
 
-    return { "id":this.id, "towns_id":this.towns_id, "users_id":this.users_id, "visited":this.visited };
+    return { 
+      "id":this.id, 
+      "towns_id":this.towns_id, 
+      "users_id":this.users_id, 
+      "visited":this.visited 
+    };
   };
   // .toggleVisited - change true to false and false to true
   UserTownEntry.prototype.toggleVisited = function() {
