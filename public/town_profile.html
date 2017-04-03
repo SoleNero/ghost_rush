@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <script src="https://use.fontawesome.com/eb9acafe7e.js"></script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/town_profile.css">
 </head>
@@ -32,15 +33,14 @@
             <!-- end nav-wrapper -->
         </nav>
     </header>
-    <main>
 
+    <main>
         <!--First Row-->
         <div class="container first_row" >
             <div class="row">
 
                 <!-- Town Photo -->
                 <div class="col l5" id="townPhoto">
-                    <!-- <img id="image" src="http://www.legendsofamerica.com/photos-centralcity/CentralCityPostcard.jpg"> -->
                 </div>
 
                 <!-- Town Details -->
@@ -49,72 +49,58 @@
                   <br>
 
                     <h4 id="townName"></h4>
-
                     <h6>Location: <span id = "townLocation">Latitude, Longitude</span></h6>
-
                     <h6>Cemetery: <span id = "townCemetery">Yes</span></h6>
-
                     <h6>Year Established: <span id = "townEst">1880</span></h6>
-
                     <h6>Year Abandoned: <span id = "townAbandon">1900</span></h6>
-
                     <h6>Materials Found: <span id = "townMaterials">Gold, Silver</span></h6>
                     <h6>Tour Available: <span id = "townTour">Yes</span></h6>
                   </div>
 
-
                 <!-- Want To Go/Been There Buttons -->
                 <div class="col l2 buttons center" id="buttonsContainer">
                     <div class="row">
-                        <a href="#" id="wantToGo" class="waves-effect waves-light btn" onclick ="Materialize.toast('Ghostly adventures await! Added to Your Profile' , 1000)">Want to Go</a>
+                        <a href="#" id="wantToGo" class="waves-effect waves-light btn" onclick ="Materialize.toast('Ghostly adventures await! Added to Your Profile' , 1500)">Want to Go</a>
                     </div>
 
-
                     <div class="row">
-                          <a href="#" id="beenThere" class="waves-effect waves-light btn" onclick="Materialize.toast('Professional ghost town hunter! Added to Your Profile', 1000)">Been There</a>
+                          <a href="#" id="beenThere" class="waves-effect waves-light btn" onclick="Materialize.toast('Professional ghost town hunter! Added to Your Profile', 1500)">Been There</a>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-        <!--First Row Container-->
+              </div><!--First Row Container-->
 
         <!--Second Row-->
         <div class="container">
-            <div class="row second_row">
+          <div class="row second_row">
 
-                <div class="col l4">
-                    <h5>Back Then...</h5>
-                    <p id="townDescThen"></p>
-                </div>
+              <div class="col l4">
+                  <h5>Back Then...</h5>
+                  <p id="townDescThen"></p>
+              </div>
 
-                <div class="col l3">
-                    <h5>And Now...</h5>
-                    <p id="townDescNow"></p>
-                </div>
+              <div class="col l3">
+                  <h5>And Now...</h5>
+                  <p id="townDescNow"></p>
+              </div>
 
-                <!--Map-->
-                <div class="col l5" id="map">
+              <!--Map-->
+              <div class="col l5" id="map">
+              </div>
 
-                </div>
-            </div>
-        </div>
-        <!--2nd Row Container-->
+          </div>
+        </div><!--2nd Row Container-->
 
     </main>
     <footer class="page-footer">
         <div class="container">
             <div class="row">
-                <div class="col s12">
-                    <div class="left left-footer-link">
-                        <a href="#">Contact</a>
-                    </div>
-                    <!-- end left footer link -->
-                    <div class="right right-footer-link">
-                        <a href="#">Help</a>
-                    </div>
-                    <!-- end right footer link -->
+              <div class="col s12">
+                <div id = "footerContact" class = "right right-footer-link">
+                  <a href = "https://github.com/SoleNero/ghost_rush" target="_blank"><i class="fa fa-github-square fa-2x" aria-hidden="true"></i></a>
                 </div>
+                <!-- end right footer link -->
+              </div>
             </div>
         </div>
         <div class="footer-copyright">
@@ -127,20 +113,12 @@
     </footer>
 </body>
 
-
-
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="js/town.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWOOEwksV1xbyyjRGv4BEvXlT7PrdTOoQ&callback=init"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-
-<script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/town-buttons.js"></script>
 <script type="text/javascript" src="js/logout.js"></script>
 <script type="text/javascript" src="js/user.js"></script>
-
-
-
 </html>
